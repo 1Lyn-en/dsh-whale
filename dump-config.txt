@@ -1,0 +1,25 @@
+﻿node.exe : file:///C:/Users/Admin/AppData/Local/Doubao/User%20Data/sandbox_runtime/bases/ab461168341fe21b788445afb1c7dd
+69/node/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-app-boot/lib/index.js:83
+At C:\Users\Admin\AppData\Local\Doubao\User Data\sandbox_runtime\bases\ab461168341fe21b788445afb1c7dd69\node\dsh.ps1:16
+ char:5
++     & "$basedir/node$exe"  "$basedir/node_modules/@deepseek-ai/dsh/li ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (file:///C:/User...lib/index.js:83:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+			} else data.push(...insert);
+			                    ^
+
+TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function
+    at applyEntryPatches (file:///C:/Users/Admin/AppData/Local/Doubao/User%20Data/sandbox_runtime/bases/ab461168341fe21
+b788445afb1c7dd69/node/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-app-boot/lib/index.js:83:16)
+    at snapshot (file:///C:/Users/Admin/AppData/Local/Doubao/User%20Data/sandbox_runtime/bases/ab461168341fe21b788445af
+b1c7dd69/node/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-app-boot/lib/index.js:894:10)
+    at renderConfigDump (file:///C:/Users/Admin/AppData/Local/Doubao/User%20Data/sandbox_runtime/bases/ab461168341fe21b
+788445afb1c7dd69/node/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-app-boot/lib/index.js:911:14)
+    at runDumpConfig (file:///C:/Users/Admin/AppData/Local/Doubao/User%20Data/sandbox_runtime/bases/ab461168341fe21b788
+445afb1c7dd69/node/node_modules/@deepseek-ai/dsh/lib/dump-config-D-jtgwY3.js:48:23)
+    at file:///C:/Users/Admin/AppData/Local/Doubao/User%20Data/sandbox_runtime/bases/ab461168341fe21b788445afb1c7dd69/n
+ode/node_modules/@deepseek-ai/dsh/lib/bin.js:148:3
+
+Node.js v20.20.2

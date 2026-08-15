@@ -1,5 +1,5 @@
 # dsh-whale: 鲸鱼极简语模式
 # 安装后自动插入到 profile 的插件层
 - insert:
-    id: whale-mode
-    plugin: "@renyilin/dsh-whale"
+    - id: whale-mode
+      name: "@renyilin/dsh-whale"
