@@ -7,7 +7,9 @@
   "types": "lib/index.d.ts",
   "exports": {
     ".": "./lib/index.js",
-    "./cordis.patch.yml": "./cordis.patch.yml"
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
   },
   "files": [
     "lib",
@@ -41,6 +43,13 @@
   "dsh": {
     "bundle": {
       "patch": "cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-commands"
+      ],
+      "platform": "web"
     }
   },
   "keywords": [
