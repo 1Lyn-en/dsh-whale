@@ -5,6 +5,7 @@
  * 格式遵循 DSH ModuleLoader 规范
  */
 declare const window: any;
+declare const document: any;
 
 window.__ModuleLoader__.load({
   id: "@1lyn-en/dsh-whale",
@@ -116,6 +117,165 @@ window.__ModuleLoader__.load({
       return { text, mode: currentMode };
     }
 
+    /** 注入鲸鱼喷水动画 CSS（只注入一次） */
+    let whaleCssInjected = false;
+    function injectWhaleCss() {
+      if (whaleCssInjected) return;
+      whaleCssInjected = true;
+      const style = document.createElement("style");
+      style.textContent = `
+        .whale-header-btn {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 28px;
+          height: 28px;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          border-radius: 6px;
+          transition: background 0.15s;
+          padding: 0;
+        }
+        .whale-header-btn:hover {
+          background: var(--dsh-color-bg-hover, rgba(0,0,0,0.06));
+        }
+        .whale-header-btn.active {
+          background: var(--dsh-color-brand-bg, rgba(59,130,246,0.1));
+        }
+        .whale-icon {
+          font-size: 18px;
+          line-height: 1;
+          transition: transform 0.3s;
+        }
+        .whale-header-btn.active .whale-icon {
+          animation: whale-bob 2s ease-in-out infinite;
+        }
+        @keyframes whale-bob {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-2px); }
+        }
+        .whale-spout {
+          position: absolute;
+          top: -4px;
+          left: 50%;
+          transform: translateX(-50%);
+          pointer-events: none;
+          width: 20px;
+          height: 16px;
+        }
+        .whale-drop {
+          position: absolute;
+          bottom: 0;
+          width: 3px;
+          height: 3px;
+          border-radius: 50%;
+          background: var(--dsh-color-brand, #3b82f6);
+          opacity: 0;
+        }
+        .whale-header-btn.active .whale-drop {
+          animation: whale-spout 1.5s ease-out infinite;
+        }
+        .whale-drop:nth-child(1) { left: 30%; animation-delay: 0s; }
+        .whale-drop:nth-child(2) { left: 50%; animation-delay: 0.3s; }
+        .whale-drop:nth-child(3) { left: 70%; animation-delay: 0.6s; }
+        .whale-drop:nth-child(4) { left: 40%; animation-delay: 0.9s; }
+        .whale-drop:nth-child(5) { left: 60%; animation-delay: 1.2s; }
+        @keyframes whale-spout {
+          0% {
+            opacity: 0;
+            transform: translateY(0) scale(1);
+          }
+          20% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-14px) scale(0.3);
+          }
+        }
+        .whale-header-btn.streaming .whale-drop {
+          animation-duration: 0.6s;
+        }
+        .whale-header-btn.streaming .whale-icon {
+          animation: whale-bob 0.8s ease-in-out infinite;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    /**
+     * 鲸鱼头部按钮组件
+     * 显示在会话头部，点击切换鲸鱼模式，开启时显示喷水动画
+     */
+    function WhaleHeaderAction({ sessionId, useSessions }: any) {
+      const [mode, setMode] = React.useState(currentMode);
+      const [streaming, setStreaming] = React.useState(false);
+
+      // 监听会话状态，判断是否正在输出
+      React.useEffect(() => {
+        if (!useSessions) return;
+        const unsubscribe = useSessions.subscribe?.((state: any) => {
+          const session = state.sessions?.[sessionId];
+          const isStreaming = session?.status === "streaming" || session?.isStreaming;
+          setStreaming(!!isStreaming);
+        });
+        return unsubscribe;
+      }, [sessionId, useSessions]);
+
+      // 监听模式变化（popup 切换时更新）
+      React.useEffect(() => {
+        const interval = setInterval(() => {
+          if (mode !== currentMode) {
+            setMode(currentMode);
+          }
+        }, 500);
+        return () => clearInterval(interval);
+      }, [mode]);
+
+      // 注入 CSS
+      React.useEffect(() => {
+        injectWhaleCss();
+      }, []);
+
+      const isActive = mode !== "off";
+
+      const handleClick = async () => {
+        // 切换到上一次使用的模式或 full
+        const nextMode = isActive ? "off" : "full";
+        try {
+          const live = (window as any).__ModuleLoader__?.ctx?.sessions?.binding?.(sessionId)?.session;
+          if (live) {
+            await live.command(`/whale ${nextMode}`);
+          }
+        } catch { /* ignore */ }
+        currentMode = nextMode;
+        setMode(nextMode);
+        try { localStorage.setItem(STORAGE_KEY, nextMode); } catch { /* ignore */ }
+      };
+
+      return React.createElement(
+        "button",
+        {
+          className: `whale-header-btn${isActive ? " active" : ""}${streaming ? " streaming" : ""}`,
+          onClick: handleClick,
+          title: isActive ? `鲸鱼模式：${mode}（点击关闭）` : "鲸鱼模式（点击开启）",
+          "aria-label": "鲸鱼模式",
+        },
+        isActive && React.createElement(
+          "div",
+          { className: "whale-spout" },
+          React.createElement("div", { className: "whale-drop" }),
+          React.createElement("div", { className: "whale-drop" }),
+          React.createElement("div", { className: "whale-drop" }),
+          React.createElement("div", { className: "whale-drop" }),
+          React.createElement("div", { className: "whale-drop" })
+        ),
+        React.createElement("span", { className: "whale-icon" }, "🐳")
+      );
+    }
+
     /**
      * 客户端插件入口
      */
@@ -152,6 +312,17 @@ window.__ModuleLoader__.load({
             name: "conversation.chat.turnTail",
             select: selectWhaleStats,
           }, WhaleTokenStats)
+        );
+      }
+
+      // 3. 会话头部鲸鱼图标按钮（喷水动画）
+      if (slots && typeof slots.inject === "function") {
+        slots.inject("conversation.session.header.actions", () =>
+          slots.register({
+            name: "conversation.session.header.actions",
+            id: "whale-toggle",
+            order: 15,
+          }, WhaleHeaderAction)
         );
       }
     }
