@@ -23,7 +23,7 @@
 
 ```bash
 # From GitHub (recommended)
-dsh plugin --profile web add github:renyilin/dsh-whale
+dsh plugin --profile web add github:1Lyn-en/dsh-whale
 
 # From npm
 dsh plugin --profile web add @renyilin/dsh-whale
@@ -65,7 +65,7 @@ Automatically exits whale mode temporarily for:
 Also available as a `SKILL.md` for Claude Code / Codex / Cursor:
 
 ```bash
-/skill add https://raw.githubusercontent.com/renyilin/dsh-whale/main/cross-platform/SKILL.md
+/skill add https://raw.githubusercontent.com/1Lyn-en/dsh-whale/main/cross-platform/SKILL.md
 ```
 
 ---

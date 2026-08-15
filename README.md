@@ -26,7 +26,7 @@
 
 ```bash
 # 从 GitHub 安装（推荐）
-dsh plugin --profile web add github:renyilin/dsh-whale
+dsh plugin --profile web add github:1Lyn-en/dsh-whale
 
 # 从 npm 安装
 dsh plugin --profile web add @renyilin/dsh-whale
@@ -115,7 +115,7 @@ dsh plugin --profile web add ./renyilin-dsh-whale-0.1.0.tgz
 
 ```bash
 # Claude Code
-/skill add https://raw.githubusercontent.com/renyilin/dsh-whale/main/cross-platform/SKILL.md
+/skill add https://raw.githubusercontent.com/1Lyn-en/dsh-whale/main/cross-platform/SKILL.md
 ```
 
 ---
