@@ -1,0 +1,14 @@
+# 源码
+src/
+tests/
+
+# 文档（保留 README）
+项目开发路径.md
+assets/
+
+# 开发配置
+.vscode/
+.idea/
+
+# 测试覆盖率
+coverage/

@@ -1,0 +1,66 @@
+{
+  "name": "@renyilin/dsh-whale",
+  "version": "0.1.0",
+  "description": "鲸鱼不废话，少词办大事 — DSH 极简语模式，节省 60-75% 输出 token",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": "./lib/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "pack": "npm run build && npm pack",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": ">=0.0.1-rc.1 <0.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^22.0.0",
+    "vitest": "^2.0.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "cordis.patch.yml"
+    }
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "whale",
+    "token-saving",
+    "caveman",
+    "brevity",
+    "minimal"
+  ],
+  "author": "任驿林 <renyilin.1234@bytedance.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/renyilin/dsh-whale.git"
+  },
+  "homepage": "https://github.com/renyilin/dsh-whale#readme",
+  "bugs": {
+    "url": "https://github.com/renyilin/dsh-whale/issues"
+  }
+}
