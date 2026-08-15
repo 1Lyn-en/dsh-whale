@@ -29,11 +29,11 @@
 dsh plugin --profile web add github:1Lyn-en/dsh-whale
 
 # 从 npm 安装
-dsh plugin --profile web add @renyilin/dsh-whale
+dsh plugin --profile web add @1lyn-en/dsh-whale
 
 # 本地开发安装
 npm pack
-dsh plugin --profile web add ./renyilin-dsh-whale-0.1.0.tgz
+dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 ```
 
 安装后重启 `dsh web`，在对话中输入 `/whale` 即可激活。
@@ -139,7 +139,7 @@ npm run build
 npm run pack
 
 # 本地安装测试
-dsh plugin --profile web add ./renyilin-dsh-whale-0.1.0.tgz
+dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 ```
 
 ### 项目结构

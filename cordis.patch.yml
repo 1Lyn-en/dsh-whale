@@ -2,4 +2,4 @@
 # 安装后自动插入到 profile 的插件层
 - insert:
     - id: whale-mode
-      name: "@renyilin/dsh-whale"
+      name: "@1lyn-en/dsh-whale"

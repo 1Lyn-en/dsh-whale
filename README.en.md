@@ -26,7 +26,7 @@
 dsh plugin --profile web add github:1Lyn-en/dsh-whale
 
 # From npm
-dsh plugin --profile web add @renyilin/dsh-whale
+dsh plugin --profile web add @1lyn-en/dsh-whale
 ```
 
 Then restart `dsh web` and type `/whale` in chat to activate.
