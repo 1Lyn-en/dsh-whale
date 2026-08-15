@@ -12,6 +12,8 @@
 
 ## 📊 Before / After
 
+![dsh-whale Before/After 对比](assets/before-after.png)
+
 | 正常模式（69 token） | 鲸鱼模式（18 token） |
 |---|---|
 | "当然可以！你的 React 组件重新渲染的原因很可能是因为你在每次渲染时都创建了一个新的对象引用。我建议你使用 useMemo 来包裹这个对象。" | "新对象引用每次渲染。内联对象 prop = 新引用 = 重渲染。用 useMemo 包裹。" |
@@ -189,7 +191,7 @@ A: 完全安全。插件只注入 system-prompt 和注册命令，不做任何�
 
 ## 📄 License
 
-MIT © 任驿林
+MIT © ylin
 
 ---
 
