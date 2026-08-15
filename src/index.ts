@@ -21,6 +21,7 @@ import {
   handleWhaleDefaultCommand,
   type CommandResult,
 } from './commands/whale-command.js';
+import { handleWhaleCommitCommand } from './commands/whale-commit.js';
 import { createSettingsManager } from './settings/whale-settings.js';
 import type { WhaleSettings } from './types.js';
 
@@ -113,11 +114,19 @@ export function apply(ctx: {
           }),
       });
 
-      // 5. 返回清理函数
+      // 5. 注册 /whale-commit 命令
+      const disposeCommitCmd = injected.commands.register({
+        name: 'whale-commit',
+        description: '🐳 生成极简 commit message（≤50 字符）。用法：/whale-commit',
+        handler: (invocation) => handleWhaleCommitCommand(invocation.rawInput, null),
+      });
+
+      // 6. 返回清理函数
       return () => {
         disposeSection?.();
         disposeWhaleCmd?.();
         disposeDefaultCmd?.();
+        disposeCommitCmd?.();
       };
     }
   );
