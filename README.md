@@ -60,6 +60,46 @@ dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 
 ---
 
+## ✨ 客户端特性
+
+### 🎛️ 模式下拉选择
+
+输入 `/whale` 后直接弹出 6 档模式下拉菜单（DSH 原生 popupSelect 组件），无需记忆命令参数：
+
+```
+/whale  →  [关闭] [轻度] [标准] [极致] [文言·轻度] [文言·极致]
+```
+
+### 📊 Token 节省统计
+
+每轮 AI 回复末尾自动显示 token 节省量，按字符类型加权估算（中文 1 token/字，英文 0.25 token/字符）：
+
+```
+🐳 已节省 156 token（62%）
+```
+
+### 🐋 会话头部鲸鱼按钮
+
+会话头部显示赛博朋克霓虹风格鲸鱼图标，点击一键切换模式（关闭 ↔ 标准），开启时显示喷水动画。
+
+### 🌊 全屏过渡动画
+
+开启鲸鱼模式时，页面中央显示官方 DeepSeek 黑鲸 logo 渐变为赛博朋克霓虹鲸的过渡动画（像素瓦解效果）。
+
+### ⌨️ 键盘快捷键
+
+- `Ctrl/Cmd + Shift + W`：快速切换鲸鱼模式（关闭 ↔ 标准）
+
+### 📝 极简 Commit Message
+
+```bash
+/whale-commit    # 根据 git diff --staged 自动生成 ≤50 字符的 commit message
+```
+
+根据变更文件类型自动推断提交类型（feat/fix/docs/chore/ci/test/refactor）。
+
+---
+
 ## 🔧 核心规则
 
 **砍掉：**
@@ -131,6 +171,14 @@ npm install
 # 类型检查
 npm run typecheck
 
+# Lint
+npm run lint
+npm run lint:fix
+
+# 格式化
+npm run format
+npm run format:check
+
 # 运行测试
 npm test
 
@@ -149,7 +197,8 @@ dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 ```
 dsh-whale/
 ├── src/
-│   ├── index.ts              # 插件入口
+│   ├── index.ts              # 插件入口（服务端）
+│   ├── client.ts             # 客户端入口（popupSelect / token统计 / 鲸鱼按钮 / 过渡动画）
 │   ├── types.ts              # 类型定义
 │   ├── prompts/              # 6 档模式 prompt
 │   │   ├── whale-lite.ts
@@ -160,13 +209,18 @@ dsh-whale/
 │   │   ├── auto-clarity.ts   # 自动清晰度保护
 │   │   └── index.ts
 │   ├── commands/
-│   │   └── whale-command.ts  # /whale 命令
+│   │   ├── whale-command.ts  # /whale 命令
+│   │   └── whale-commit.ts   # /whale-commit 极简 commit message
 │   └── settings/
 │       └── whale-settings.ts # 持久化设置
 ├── cross-platform/
 │   └── SKILL.md              # Claude/Codex 兼容版
 ├── tests/
+│   ├── command.test.ts
 │   └── prompt.test.ts
+├── .github/workflows/ci.yml  # CI（typecheck + lint + format + build + test）
+├── eslint.config.js          # ESLint 配置
+├── .prettierrc               # Prettier 配置
 ├── cordis.patch.yml          # DSH 插件配置
 ├── package.json
 ├── tsconfig.json

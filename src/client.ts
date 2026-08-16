@@ -77,10 +77,30 @@ window.__ModuleLoader__.load({
         .join('');
     }
 
-    /** 估算文本 token 数（混合中英文，字符数/2.5） */
+    /** 估算文本 token 数（按字符类型加权，比简单 /2.5 更准确） */
     function estimateTokens(text: string): number {
       if (!text) return 0;
-      return Math.round(text.length / 2.5);
+      let tokens = 0;
+      for (const ch of text) {
+        const code = ch.codePointAt(0) ?? 0;
+        if (code >= 0x4e00 && code <= 0x9fff) {
+          // CJK 统一汉字：约 1 token/字
+          tokens += 1;
+        } else if (code >= 0x3000 && code <= 0x303f) {
+          // CJK 标点：约 0.8 token
+          tokens += 0.8;
+        } else if (/[a-zA-Z0-9]/.test(ch)) {
+          // 英文/数字：约 0.25 token/字符（~4 字符 1 token）
+          tokens += 0.25;
+        } else if (ch === ' ' || ch === '\n' || ch === '\t') {
+          // 空白：约 0.1 token
+          tokens += 0.1;
+        } else {
+          // 其他标点/符号：约 0.5 token
+          tokens += 0.5;
+        }
+      }
+      return Math.round(tokens);
     }
 
     // ============================================================
@@ -507,6 +527,18 @@ window.__ModuleLoader__.load({
           /* ignore */
         }
       };
+
+      // 键盘快捷键：Ctrl/Cmd+Shift+W 切换鲸鱼模式
+      useEffect(() => {
+        const handler = (e: any) => {
+          if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'w') {
+            e.preventDefault();
+            handleClick();
+          }
+        };
+        window.addEventListener('keydown', handler);
+        return () => window.removeEventListener('keydown', handler);
+      }, [mode]);
 
       const modeLabel = MODES.find((m) => m.id === mode)?.label ?? mode;
       const title = isActive ? `鲸鱼模式：${modeLabel}（点击关闭）` : '鲸鱼模式（点击开启）';
