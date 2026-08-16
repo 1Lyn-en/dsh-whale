@@ -10,7 +10,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-blue.svg)](https://github.com/deepseek-ai/deepseek-harness)
-[![dsh-plugin](https://img.shields.io/topic/dsh--plugin-green.svg)](https://github.com/topics/dsh-plugin)
+[![dsh-plugin](https://img.shields.io/badge/topic-dsh--plugin-green.svg)](https://github.com/topics/dsh-plugin)
 
 </div>
 
