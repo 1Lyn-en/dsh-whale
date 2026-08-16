@@ -116,6 +116,10 @@ dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 | :---: | :---: |
 | ![CyberUI Code Table](assets/cyberui/cyberui-code-table.png) | ![CyberUI Timeline](assets/cyberui/cyberui-timeline-expanded.png) |
 
+| 侧边栏长标题 |
+| :---: |
+| ![CyberUI Sidebar Long Title](assets/cyberui/cyberui-sidebar-long-title.png) |
+
 > 主题仅在鲸鱼模式激活时生效，不影响默认 DSH 体验。刷新页面时若已在鲸鱼模式，主题自动恢复。
 
 ### ⌨️ 键盘快捷键

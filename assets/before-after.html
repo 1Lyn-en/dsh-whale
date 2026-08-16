@@ -16,172 +16,343 @@
           sans-serif;
         background: #0a0e1a;
         color: #e0e6ed;
-        padding: 40px;
+        padding: 48px 40px;
         min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+          radial-gradient(ellipse at 20% 20%, rgba(0, 229, 255, 0.06) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 80%, rgba(255, 0, 128, 0.06) 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 50%, rgba(128, 0, 255, 0.04) 0%, transparent 60%);
+        pointer-events: none;
+        z-index: 0;
       }
       .header {
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 48px;
+        position: relative;
+        z-index: 1;
+      }
+      .header .logo {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin: 0 auto 16px;
+        display: block;
+        box-shadow:
+          0 0 20px rgba(0, 229, 255, 0.4),
+          0 0 40px rgba(128, 0, 255, 0.2);
+        border: 2px solid rgba(0, 229, 255, 0.3);
       }
       .header h1 {
-        font-size: 32px;
-        font-weight: 700;
-        background: linear-gradient(135deg, #4fc3f7, #29b6f6);
+        font-size: 36px;
+        font-weight: 800;
+        background: linear-gradient(135deg, #00e5ff 0%, #7c4dff 50%, #ff4081 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 8px;
+        background-clip: text;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
       }
       .header p {
         color: #8899aa;
-        font-size: 16px;
+        font-size: 17px;
+        letter-spacing: 0.5px;
       }
       .comparison {
         display: flex;
-        gap: 24px;
-        max-width: 1200px;
+        gap: 28px;
+        max-width: 1280px;
         margin: 0 auto;
+        position: relative;
+        z-index: 1;
       }
       .panel {
         flex: 1;
-        border-radius: 16px;
+        border-radius: 18px;
         overflow: hidden;
-        border: 1px solid #1e2a3a;
+        position: relative;
       }
-      .panel-header {
-        padding: 16px 24px;
-        font-weight: 600;
-        font-size: 18px;
+      /* BEFORE - Default DSH Theme */
+      .panel.before {
+        border: 1px solid #d0d7de;
+        background: #ffffff;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      }
+      .panel.before .panel-header {
+        background: linear-gradient(135deg, #f6f8fa, #eaeef2);
+        border-bottom: 1px solid #d0d7de;
+        padding: 18px 24px;
         display: flex;
         align-items: center;
         gap: 10px;
       }
-      .panel.before .panel-header {
-        background: linear-gradient(135deg, #37474f, #455a64);
+      .panel.before .panel-header .mode-icon {
+        font-size: 22px;
       }
-      .panel.after .panel-header {
-        background: linear-gradient(135deg, #01579b, #0277bd);
+      .panel.before .panel-header .mode-text {
+        font-weight: 600;
+        font-size: 17px;
+        color: #24292f;
       }
-      .token-badge {
+      .panel.before .token-badge {
         margin-left: auto;
         font-size: 13px;
-        padding: 4px 12px;
+        padding: 5px 14px;
         border-radius: 20px;
-        font-weight: 500;
+        font-weight: 600;
+        background: #fff1e6;
+        color: #d97706;
+        border: 1px solid #fed7aa;
       }
-      .before .token-badge {
-        background: rgba(255, 255, 255, 0.1);
-        color: #ffab91;
+      .panel.before .panel-body {
+        padding: 28px 24px;
+        background: #ffffff;
+        min-height: 340px;
       }
-      .after .token-badge {
-        background: rgba(255, 255, 255, 0.15);
-        color: #80deea;
+      .panel.before .qa-block {
+        margin-bottom: 22px;
       }
-      .panel-body {
-        padding: 24px;
-        background: #0f1722;
-        min-height: 280px;
-      }
-      .qa-block {
-        margin-bottom: 20px;
-      }
-      .qa-block:last-child {
+      .panel.before .qa-block:last-child {
         margin-bottom: 0;
       }
-      .question {
+      .panel.before .question {
         font-size: 13px;
-        color: #5c6b7a;
-        margin-bottom: 8px;
-        font-weight: 500;
+        color: #6e7781;
+        margin-bottom: 10px;
+        font-weight: 600;
+        padding-left: 10px;
+        border-left: 3px solid #d0d7de;
       }
-      .answer {
+      .panel.before .answer {
         font-size: 15px;
-        line-height: 1.7;
-        color: #c8d6e0;
+        line-height: 1.8;
+        color: #24292f;
+        background: #f6f8fa;
+        padding: 16px 18px;
+        border-radius: 10px;
+        border: 1px solid #eaeef2;
       }
-      .before .answer .filler {
-        color: #546e7a;
+      .panel.before .answer .filler {
+        color: #8c959f;
         text-decoration: line-through;
-        text-decoration-color: #ff7043;
+        text-decoration-color: #f97316;
+        text-decoration-thickness: 1.5px;
       }
-      .after .answer {
-        color: #b2ebf2;
+      /* AFTER - Cyberpunk Whale Theme */
+      .panel.after {
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        background: linear-gradient(145deg, #0d1117 0%, #161b22 100%);
+        box-shadow:
+          0 0 30px rgba(0, 229, 255, 0.15),
+          0 0 60px rgba(124, 77, 255, 0.1),
+          inset 0 1px 0 rgba(0, 229, 255, 0.1);
+        backdrop-filter: blur(10px);
+      }
+      .panel.after::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 229, 255, 0.015) 2px,
+            rgba(0, 229, 255, 0.015) 4px
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .panel.after .panel-header {
+        background: linear-gradient(135deg, rgba(0, 229, 255, 0.12), rgba(124, 77, 255, 0.12));
+        border-bottom: 1px solid rgba(0, 229, 255, 0.25);
+        padding: 18px 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        z-index: 1;
+        backdrop-filter: blur(8px);
+      }
+      .panel.after .panel-header .mode-icon {
+        font-size: 22px;
+        filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.6));
+      }
+      .panel.after .panel-header .mode-text {
+        font-weight: 700;
+        font-size: 17px;
+        color: #00e5ff;
+        text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        letter-spacing: 0.5px;
+      }
+      .panel.after .token-badge {
+        margin-left: auto;
+        font-size: 13px;
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        background: rgba(0, 229, 255, 0.12);
+        color: #80deea;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+      }
+      .panel.after .panel-body {
+        padding: 28px 24px;
+        min-height: 340px;
+        position: relative;
+        z-index: 1;
+      }
+      .panel.after .qa-block {
+        margin-bottom: 22px;
+      }
+      .panel.after .qa-block:last-child {
+        margin-bottom: 0;
+      }
+      .panel.after .question {
+        font-size: 13px;
+        color: #8b949e;
+        margin-bottom: 10px;
+        font-weight: 600;
+        padding-left: 10px;
+        border-left: 3px solid #7c4dff;
+      }
+      .panel.after .answer {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #e6edf3;
+        background: rgba(0, 229, 255, 0.05);
+        padding: 16px 18px;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 229, 255, 0.2);
         font-weight: 500;
+        backdrop-filter: blur(6px);
+        box-shadow: inset 0 1px 0 rgba(0, 229, 255, 0.08);
+      }
+      .panel.after .answer .keyword {
+        color: #ff4081;
+        font-weight: 600;
+      }
+      .panel.after .answer .tech {
+        color: #00e5ff;
       }
       .savings {
         text-align: center;
-        margin-top: 32px;
-        padding: 20px;
-        background: linear-gradient(135deg, rgba(2, 119, 189, 0.15), rgba(79, 195, 247, 0.1));
-        border-radius: 12px;
-        border: 1px solid rgba(79, 195, 247, 0.2);
-        max-width: 1200px;
+        margin-top: 40px;
+        padding: 28px 32px;
+        background: linear-gradient(135deg, rgba(0, 229, 255, 0.08), rgba(124, 77, 255, 0.08), rgba(255, 64, 129, 0.06));
+        border-radius: 16px;
+        border: 1px solid rgba(0, 229, 255, 0.25);
+        max-width: 1280px;
         margin-left: auto;
         margin-right: auto;
+        position: relative;
+        z-index: 1;
+        backdrop-filter: blur(10px);
+        box-shadow:
+          0 0 30px rgba(0, 229, 255, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
       }
       .savings .big {
-        font-size: 36px;
-        font-weight: 800;
-        color: #4fc3f7;
+        font-size: 42px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #00e5ff, #7c4dff, #ff4081);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: 1px;
       }
       .savings .label {
         color: #8899aa;
-        font-size: 14px;
-        margin-top: 4px;
+        font-size: 15px;
+        margin-top: 8px;
+        letter-spacing: 0.5px;
       }
-      .whale-icon {
-        font-size: 24px;
+      .savings .label .highlight {
+        color: #00e5ff;
+        font-weight: 600;
+      }
+      .vs-badge {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #00e5ff, #7c4dff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 14px;
+        color: #fff;
+        z-index: 10;
+        box-shadow:
+          0 0 20px rgba(0, 229, 255, 0.5),
+          0 0 40px rgba(124, 77, 255, 0.3);
       }
     </style>
   </head>
   <body>
     <div class="header">
-      <h1>🐳 dsh-whale 鲸鱼模式</h1>
+      <img src="whale-icon.png" alt="dsh-whale" class="logo" />
+      <h1>dsh-whale 鲸鱼模式</h1>
       <p>砍掉 AI 所有废话，节省 60-75% 输出 token</p>
     </div>
 
     <div class="comparison">
       <div class="panel before">
         <div class="panel-header">
-          <span>😴 正常模式</span>
+          <span class="mode-icon">&#128564;</span>
+          <span class="mode-text">正常模式</span>
           <span class="token-badge">69 tokens</span>
         </div>
         <div class="panel-body">
           <div class="qa-block">
             <div class="question">Q: React 组件为什么总重新渲染？</div>
             <div class="answer">
-              <span class="filler">当然可以！你的 React 组件重新渲染的原因很可能是因为</span
-              >你在每次渲染时都创建了一个新的对象引用。<span class="filler">我建议你</span>使用
-              useMemo 来包裹这个对象。
+              <span class="filler">当然可以！你的 React 组件重新渲染的原因很可能是因为</span>你在每次渲染时都创建了一个新的对象引用。<span class="filler">我建议你</span>使用 useMemo 来包裹这个对象。
             </div>
           </div>
           <div class="qa-block">
             <div class="question">Q: 数据库连接池有什么用？</div>
             <div class="answer">
-              <span class="filler">好问题！简单来说，</span>数据库连接池复用已打开的连接，<span
-                class="filler"
-                >这样可以</span
-              >避免每次请求新建连接和握手开销。
+              <span class="filler">好问题！简单来说，</span>数据库连接池复用已打开的连接，<span class="filler">这样可以</span>避免每次请求新建连接和握手开销。
             </div>
           </div>
         </div>
       </div>
 
+      <div class="vs-badge">VS</div>
+
       <div class="panel after">
         <div class="panel-header">
-          <span class="whale-icon">🐳</span>
-          <span>鲸鱼模式</span>
+          <span class="mode-icon">&#128011;</span>
+          <span class="mode-text">鲸鱼模式</span>
           <span class="token-badge">18 tokens</span>
         </div>
         <div class="panel-body">
           <div class="qa-block">
             <div class="question">Q: React 组件为什么总重新渲染？</div>
             <div class="answer">
-              新对象引用每次渲染。内联对象 prop = 新引用 = 重渲染。用 useMemo 包裹。
+              <span class="keyword">新对象引用</span>每次渲染。内联对象 prop = 新引用 = 重渲染。用 <span class="tech">useMemo</span> 包裹。
             </div>
           </div>
           <div class="qa-block">
             <div class="question">Q: 数据库连接池有什么用？</div>
-            <div class="answer">连接池复用连接。免逐请求握手。</div>
+            <div class="answer">连接池<span class="keyword">复用连接</span>。免逐次请求握手。</div>
           </div>
         </div>
       </div>
@@ -189,7 +360,7 @@
 
     <div class="savings">
       <div class="big">节省 74% token</div>
-      <div class="label">信息零丢失 · 代码/术语/数字一字不改</div>
+      <div class="label"><span class="highlight">信息零丢失</span> &middot; 代码/术语/数字一字不改</div>
     </div>
   </body>
 </html>
