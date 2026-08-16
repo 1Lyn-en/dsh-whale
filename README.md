@@ -92,7 +92,31 @@ dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 
 ### 🌊 全屏过渡动画
 
-开启鲸鱼模式时，页面中央显示官方 DeepSeek 黑鲸 logo 渐变为赛博朋克霓虹鲸的过渡动画（像素瓦解效果）。
+开启鲸鱼模式时，页面中央显示官方 DeepSeek 黑鲸 logo 渐变为赛博朋克霓虹鲸的过渡动画（像素瓦解效果，2.6 秒）。
+
+### 🌃 赛博朋克主题（条件激活）
+
+**进入鲸鱼模式后自动激活赛博朋克主题，退出后恢复 DSH 默认主题。**
+
+主题切换与 logo 过渡动画联动：动画播放完毕后，整个界面从默认主题平滑切换为赛博朋克霓虹风格。选择「关闭」模式时立即恢复默认主题。
+
+| 暗色赛博朋克 | 亮色赛博朋克 |
+| :---: | :---: |
+| ![CyberUI Dark](assets/cyberui/cyberui-dark.png) | ![CyberUI Light](assets/cyberui/cyberui-light.png) |
+
+**主题特性：**
+
+- 霓虹色调配色（青/品红/紫渐变），毛玻璃卡片效果
+- 自定义滚动条、发光边框、扫描线背景
+- 代码块和表格赛博朋克风格渲染
+- 侧边栏长标题优雅截断
+- 时间线展开动画
+
+| 代码表格 | 时间线展开 |
+| :---: | :---: |
+| ![CyberUI Code Table](assets/cyberui/cyberui-code-table.png) | ![CyberUI Timeline](assets/cyberui/cyberui-timeline-expanded.png) |
+
+> 主题仅在鲸鱼模式激活时生效，不影响默认 DSH 体验。刷新页面时若已在鲸鱼模式，主题自动恢复。
 
 ### ⌨️ 键盘快捷键
 
