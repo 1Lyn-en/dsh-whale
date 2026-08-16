@@ -384,9 +384,10 @@ window.__ModuleLoader__.load({
         }
         .whale-transition-black {
           z-index: 2;
-          filter: grayscale(1) brightness(0) contrast(1.2);
+          filter: invert(1) grayscale(1) contrast(1.4) brightness(0.9);
           clip-path: inset(0 0 0 0);
           transition: clip-path 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+          border-radius: 12px;
         }
         .wt-scan .whale-transition-black { clip-path: inset(0 0 0 100%); }
         .whale-transition-scanline {
