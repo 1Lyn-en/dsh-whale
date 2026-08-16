@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2048" height="2048" viewBox="0 0 2048 2048" role="img" aria-label="DeepSeek cyberpunk floating background">
+  <defs>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.05  0 0 0 0 0.65  0 0 0 0 1  0 0 0 0.42 0" result="cyanGlow"/>
+      <feMerge>
+        <feMergeNode in="cyanGlow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <radialGradient id="ambient" cx="50%" cy="48%" r="58%">
+      <stop offset="0" stop-color="#08214c" stop-opacity="0.2"/>
+      <stop offset="0.65" stop-color="#050a1b" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#01030b" stop-opacity="0.26"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 原始赛博朋克图标 -->
+  <image x="0" y="0" width="2048" height="2048" preserveAspectRatio="xMidYMid slice"
+         xlink:href="DeepSeek_cyberpunk.webp" href="DeepSeek_cyberpunk.webp"/>
+
+  <!-- 轻微环境光，避免背景显得静止僵硬 -->
+  <rect width="2048" height="2048" fill="url(#ambient)">
+    <animate attributeName="opacity" values="0.45;0.72;0.45" dur="6s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- 浮动主体：引用同一图像，以柔和蒙版式叠加制造轻微上浮感 -->
+  <g opacity="0.16" filter="url(#softGlow)">
+    <image x="0" y="0" width="2048" height="2048" preserveAspectRatio="xMidYMid slice"
+           xlink:href="DeepSeek_cyberpunk.webp" href="DeepSeek_cyberpunk.webp">
+      <animateTransform attributeName="transform" type="translate"
+                        values="0 5; 0 -7; 0 5" keyTimes="0;0.5;1"
+                        dur="5.5s" calcMode="spline"
+                        keySplines="0.42 0 0.58 1;0.42 0 0.58 1"
+                        repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.08;0.18;0.08" dur="5.5s" repeatCount="indefinite"/>
+    </image>
+  </g>
+</svg>
