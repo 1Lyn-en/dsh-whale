@@ -48,6 +48,14 @@ window.__ModuleLoader__.load({
 
     /** 当前模式（从 localStorage 恢复，popup 切换时更新） */
     const STORAGE_KEY = "dsh-whale:mode";
+    const MODE_CHANGE_EVENT = "dsh-whale:mode-change";
+
+    /** 通知所有组件模式已变化（替代 setInterval 轮询） */
+    function notifyModeChange(mode: string) {
+      try {
+        window.dispatchEvent(new CustomEvent(MODE_CHANGE_EVENT, { detail: { mode } }));
+      } catch { /* ignore */ }
+    }
     let currentMode = "off";
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -447,15 +455,12 @@ window.__ModuleLoader__.load({
         return unsubscribe;
       }, [sessionId, useSessions]);
 
-      // 监听模式变化（popup 切换时更新）
+      // 监听模式变化（事件驱动，替代轮询）
       useEffect(() => {
-        const interval = setInterval(() => {
-          if (mode !== currentMode) {
-            setMode(currentMode);
-          }
-        }, 500);
-        return () => clearInterval(interval);
-      }, [mode]);
+        const handler = (e: any) => setMode(e.detail?.mode ?? currentMode);
+        window.addEventListener(MODE_CHANGE_EVENT, handler);
+        return () => window.removeEventListener(MODE_CHANGE_EVENT, handler);
+      }, []);
 
       // 注入 CSS
       useEffect(() => {
@@ -489,6 +494,7 @@ window.__ModuleLoader__.load({
         if (nextMode !== "off") showWhaleTransition();
         currentMode = nextMode;
         setMode(nextMode);
+        notifyModeChange(nextMode);
         try { localStorage.setItem(STORAGE_KEY, nextMode); } catch { /* ignore */ }
       };
 
@@ -542,6 +548,7 @@ window.__ModuleLoader__.load({
             }
             if (option.id !== "off") showWhaleTransition();
             currentMode = option.id;
+            notifyModeChange(option.id);
             try { localStorage.setItem(STORAGE_KEY, option.id); } catch { /* ignore */ }
           },
         },
