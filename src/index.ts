@@ -62,74 +62,67 @@ interface InjectedContext {
  * 通过 ctx.inject 声明依赖的服务，确保服务可用后再执行
  */
 export function apply(ctx: {
-  inject: (
-    deps: string[],
-    callback: (ctx: InjectedContext) => void | (() => void)
-  ) => unknown;
+  inject: (deps: string[], callback: (ctx: InjectedContext) => void | (() => void)) => unknown;
 }): void {
-  ctx.inject(
-    ['systemPrompt', 'commands', 'settings'],
-    (injected: InjectedContext) => {
-      // 1. 初始化设置管理器
-      const settingsApi = injected.settings?.namespace?.('whale');
-      const manager = createSettingsManager(settingsApi ?? null);
+  ctx.inject(['systemPrompt', 'commands', 'settings'], (injected: InjectedContext) => {
+    // 1. 初始化设置管理器
+    const settingsApi = injected.settings?.namespace?.('whale');
+    const manager = createSettingsManager(settingsApi ?? null);
 
-      // 2. 注入 system-prompt section
-      // order=50：在 persona(0) 之后、tool guidance(100-199) 之前
-      const disposeSection = injected.systemPrompt.section({
-        name: 'whale-mode',
-        order: 50,
-        text: () =>
-          getWhalePrompt(manager.settings.mode, manager.settings.autoClarity),
-      });
+    // 2. 注入 system-prompt section
+    // order=50：在 persona(0) 之后、tool guidance(100-199) 之前
+    const disposeSection = injected.systemPrompt.section({
+      name: 'whale-mode',
+      order: 50,
+      text: () => getWhalePrompt(manager.settings.mode, manager.settings.autoClarity),
+    });
 
-      // 3. 注册 /whale 命令
-      const disposeWhaleCmd = injected.commands.register({
-        name: 'whale',
-        description:
-          '🐳 鲸鱼模式：极简说话省 token。用法：/whale [lite|full|ultra|wenyan-lite|wenyan-full|off|status]',
-        input: { hint: '模式名称，留空查看状态' },
-        handler: (invocation) =>
-          handleWhaleCommand(invocation.rawInput, {
-            settings: manager.settings,
-            saveSettings: (s) => {
-              manager.settings = s;
-              manager.save();
-            },
-          }),
-      });
+    // 3. 注册 /whale 命令
+    const disposeWhaleCmd = injected.commands.register({
+      name: 'whale',
+      description:
+        '🐳 鲸鱼模式：极简说话省 token。用法：/whale [lite|full|ultra|wenyan-lite|wenyan-full|off|status]',
+      input: { hint: '模式名称，留空查看状态' },
+      handler: (invocation) =>
+        handleWhaleCommand(invocation.rawInput, {
+          settings: manager.settings,
+          saveSettings: (s) => {
+            manager.settings = s;
+            manager.save();
+          },
+        }),
+    });
 
-      // 4. 注册 /whale-default 命令
-      const disposeDefaultCmd = injected.commands.register({
-        name: 'whale-default',
-        description: '设置鲸鱼模式默认值（重启后生效）。用法：/whale-default <模式>',
-        input: { hint: '模式名称' },
-        handler: (invocation) =>
-          handleWhaleDefaultCommand(invocation.rawInput, {
-            settings: manager.settings,
-            saveSettings: (s) => {
-              manager.settings = s;
-              manager.save();
-            },
-          }),
-      });
+    // 4. 注册 /whale-default 命令
+    const disposeDefaultCmd = injected.commands.register({
+      name: 'whale-default',
+      description: '设置鲸鱼模式默认值（重启后生效）。用法：/whale-default <模式>',
+      input: { hint: '模式名称' },
+      handler: (invocation) =>
+        handleWhaleDefaultCommand(invocation.rawInput, {
+          settings: manager.settings,
+          saveSettings: (s) => {
+            manager.settings = s;
+            manager.save();
+          },
+        }),
+    });
 
-      // 5. 注册 /whale-commit 命令
-      const disposeCommitCmd = injected.commands.register({
-        name: 'whale-commit',
-        description: '🐳 生成极简 commit message（≤50 字符）。用法：/whale-commit',
-        handler: (invocation) => handleWhaleCommitCommand(invocation.rawInput, null),
-      });
+    // 5. 注册 /whale-commit 命令
+    const disposeCommitCmd = injected.commands.register({
+      name: 'whale-commit',
+      description: '🐳 生成极简 commit message（≤50 字符）。用法：/whale-commit',
+      handler: (invocation) => handleWhaleCommitCommand(invocation.rawInput, null),
+    });
 
-      // 6. 返回清理函数
-      return () => {
-        disposeSection?.();
-        disposeWhaleCmd?.();
-        disposeDefaultCmd?.();
-        disposeCommitCmd?.();
-      };
-    }
-  );
+    // 6. 返回清理函数
+    return () => {
+      disposeSection?.();
+      disposeWhaleCmd?.();
+      disposeDefaultCmd?.();
+      disposeCommitCmd?.();
+    };
+  });
 }
 
 export default apply;

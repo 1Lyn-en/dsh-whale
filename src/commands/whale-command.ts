@@ -5,9 +5,7 @@ import type { WhaleMode, WhaleSettings } from '../types.js';
 import { VALID_MODES, MODE_DESCRIPTIONS, MODE_EMOJI } from '../types.js';
 
 /** 命令结果类型（对齐 DSH CommandResult） */
-export type CommandResult =
-  | { kind: 'success'; text?: string }
-  | { kind: 'error'; text: string };
+export type CommandResult = { kind: 'success'; text?: string } | { kind: 'error'; text: string };
 
 export interface WhaleCommandContext {
   settings: WhaleSettings;
@@ -19,10 +17,7 @@ export interface WhaleCommandContext {
  * @param rawInput 命令原始输入（含前导空白）
  * @param ctx 命令上下文
  */
-export function handleWhaleCommand(
-  rawInput: string,
-  ctx: WhaleCommandContext
-): CommandResult {
+export function handleWhaleCommand(rawInput: string, ctx: WhaleCommandContext): CommandResult {
   const arg = rawInput.trim().toLowerCase();
 
   // 无参数或 status — 显示当前状态
@@ -72,7 +67,7 @@ export function handleWhaleCommand(
  */
 export function handleWhaleDefaultCommand(
   rawInput: string,
-  ctx: WhaleCommandContext
+  ctx: WhaleCommandContext,
 ): CommandResult {
   const arg = rawInput.trim().toLowerCase();
 

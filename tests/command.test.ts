@@ -165,7 +165,9 @@ describe('设置管理器', () => {
 
   it('API get 抛异常时降级到默认', () => {
     const api = {
-      get: () => { throw new Error('fail'); },
+      get: () => {
+        throw new Error('fail');
+      },
       set: vi.fn(),
     };
     const manager = createSettingsManager(api);
@@ -175,7 +177,9 @@ describe('设置管理器', () => {
   it('API set 抛异常时不崩溃', () => {
     const api = {
       get: () => undefined,
-      set: () => { throw new Error('fail'); },
+      set: () => {
+        throw new Error('fail');
+      },
     };
     const manager = createSettingsManager(api);
     expect(() => manager.save()).not.toThrow();

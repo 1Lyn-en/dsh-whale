@@ -82,7 +82,9 @@ function inferCommitType(files: ChangedFile[]): string {
     return 'test';
   }
   // 构建/配置
-  if (paths.every((p) => /(package\.json|tsconfig|webpack|vite|eslint|prettier|\.config\.)/.test(p))) {
+  if (
+    paths.every((p) => /(package\.json|tsconfig|webpack|vite|eslint|prettier|\.config\.)/.test(p))
+  ) {
     return 'chore';
   }
   // CI
@@ -143,10 +145,7 @@ function generateCommitMessage(files: ChangedFile[]): string {
 /**
  * 处理 /whale-commit 命令
  */
-export function handleWhaleCommitCommand(
-  _rawInput: string,
-  _ctx: unknown
-): CommandResult {
+export function handleWhaleCommitCommand(_rawInput: string, _ctx: unknown): CommandResult {
   // 检查是否在 git 仓库中
   if (!isGitRepo()) {
     return {

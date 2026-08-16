@@ -2,13 +2,7 @@
  * dsh-whale — 鲸鱼模式类型定义
  */
 
-export type WhaleMode =
-  | 'off'
-  | 'lite'
-  | 'full'
-  | 'ultra'
-  | 'wenyan-lite'
-  | 'wenyan-full';
+export type WhaleMode = 'off' | 'lite' | 'full' | 'ultra' | 'wenyan-lite' | 'wenyan-full';
 
 export interface WhaleSettings {
   /** 当前激活的模式 */

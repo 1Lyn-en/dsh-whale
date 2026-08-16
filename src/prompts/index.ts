@@ -30,10 +30,7 @@ export const MODE_PROMPTS: Record<Exclude<WhaleMode, 'off'>, string> = {
  * @param mode 鲸鱼模式
  * @param includeAutoClarity 是否包含自动清晰度保护
  */
-export function getWhalePrompt(
-  mode: WhaleMode,
-  includeAutoClarity: boolean = true
-): string {
+export function getWhalePrompt(mode: WhaleMode, includeAutoClarity: boolean = true): string {
   if (mode === 'off') return '';
   const base = MODE_PROMPTS[mode];
   if (!includeAutoClarity) return base;

@@ -21,6 +21,10 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
     "pack": "npm run build && npm pack",
@@ -36,8 +40,15 @@
     }
   },
   "devDependencies": {
-    "typescript": "^5.5.0",
+    "@eslint/js": "^9.0.0",
     "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "globals": "^17.11.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.5.0",
     "vitest": "^2.0.0"
   },
   "dsh": {

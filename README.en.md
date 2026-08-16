@@ -11,8 +11,8 @@
 
 ## 📊 Before / After
 
-| Normal (69 tokens) | Whale (18 tokens) |
-|---|---|
+| Normal (69 tokens)                                                                                                                                                                    | Whale (18 tokens)                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | "Sure! I'd be happy to help. The reason your React component re-renders is likely because you're creating a new object reference on each render. I recommend wrapping it in useMemo." | "New object ref each render. Inline object prop = new ref = re-render. Wrap in useMemo." |
 
 **74% fewer tokens, zero information loss.**
@@ -35,15 +35,15 @@ Then restart `dsh web` and type `/whale` in chat to activate.
 
 ## 🎚️ Six Intensity Levels
 
-| Command | Mode | Effect | Savings |
-|---------|------|--------|---------|
-| `/whale lite` | 🐋 Lite | Cut pleasantries, keep full sentences | ~40% |
-| `/whale` or `/whale full` | 🐳 Full (default) | Drop articles, fragment-style | ~60% |
-| `/whale ultra` | 🦈 Ultra | One word when one word enough | ~75% |
-| `/whale wenyan-lite` | 📜 Classical Lite | Semi-classical Chinese | ~60% |
-| `/whale wenyan-full` | 🏮 Classical Full | Pure classical Chinese | ~85% (chars) |
-| `/whale off` | 🌊 Off | Back to normal | — |
-| `/whale status` | — | Show current mode | — |
+| Command                   | Mode              | Effect                                | Savings      |
+| ------------------------- | ----------------- | ------------------------------------- | ------------ |
+| `/whale lite`             | 🐋 Lite           | Cut pleasantries, keep full sentences | ~40%         |
+| `/whale` or `/whale full` | 🐳 Full (default) | Drop articles, fragment-style         | ~60%         |
+| `/whale ultra`            | 🦈 Ultra          | One word when one word enough         | ~75%         |
+| `/whale wenyan-lite`      | 📜 Classical Lite | Semi-classical Chinese                | ~60%         |
+| `/whale wenyan-full`      | 🏮 Classical Full | Pure classical Chinese                | ~85% (chars) |
+| `/whale off`              | 🌊 Off            | Back to normal                        | —            |
+| `/whale status`           | —                 | Show current mode                     | —            |
 
 ---
 
@@ -88,4 +88,4 @@ MIT © Ren Yilin
 
 ---
 
-*🐳 Big whale, few words.*
+_🐳 Big whale, few words._

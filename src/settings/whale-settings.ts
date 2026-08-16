@@ -20,9 +20,7 @@ export interface WhaleSettingsManager {
  * 创建设置管理器
  * @param api DSH settings API（可能为 undefined）
  */
-export function createSettingsManager(
-  api?: WhaleSettingsApi | null
-): WhaleSettingsManager {
+export function createSettingsManager(api?: WhaleSettingsApi | null): WhaleSettingsManager {
   let settings: WhaleSettings = { ...DEFAULT_SETTINGS };
 
   // 尝试从持久化存储加载
