@@ -383,13 +383,15 @@ window.__ModuleLoader__.load({
         }
         .whale-transition-neon {
           z-index: 1;
+          padding: 16px;
+          background: radial-gradient(circle, #0a0a1a 0%, #050510 100%);
           filter: drop-shadow(0 0 20px rgba(0,200,255,0.6)) drop-shadow(0 0 40px rgba(150,0,255,0.4));
         }
         .whale-transition-black {
           z-index: 2;
           background: #ffffff;
-          padding: 14px;
-          border-radius: 12px;
+          padding: 16px;
+          border-radius: 50%;
           clip-path: inset(0 0 0 0);
           transition: clip-path 1.5s cubic-bezier(0.4, 0, 0.2, 1);
           box-shadow: 0 0 30px rgba(255,255,255,0.3);
