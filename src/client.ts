@@ -83,22 +83,22 @@ window.__ModuleLoader__.load({
      * @param className 额外 CSS 类名
      * @param active 是否激活（控制亮度）
      */
-    function WhaleSvgIcon({ size = 24, className = "", active = true }: any) {
-      return React.createElement("img", {
-        src: WHALE_ICON,
-        width: size,
-        height: size,
-        className: "whale-cyber " + className,
-        style: {
-          filter: active ? "none" : "grayscale(0.8) brightness(0.5)",
-          opacity: active ? 1 : 0.4,
-          objectFit: "contain",
-          borderRadius: "50%",
-        },
-        alt: "鲸鱼模式",
-        "aria-hidden": "true",
-      });
+        function WhaleSvgIcon({ size = 38, className = "", active = true }: any) {
+      return React.createElement(
+        "span",
+        { className: "whale-icon-wrap " + className, style: { width: size, height: size } },
+        React.createElement("span", { className: "whale-glow-bg", "aria-hidden": "true" }),
+        React.createElement("span", { className: "whale-ring", "aria-hidden": "true" }),
+        React.createElement("img", {
+          src: WHALE_ICON,
+          className: "whale-cyber",
+          style: { width: size, height: size },
+          alt: "鲸鱼模式",
+          "aria-hidden": "true",
+        })
+      );
     }
+
 
 
     // ============================================================
@@ -157,19 +157,18 @@ window.__ModuleLoader__.load({
       if (whaleCssInjected) return;
       whaleCssInjected = true;
       const style = document.createElement("style");
-      style.textContent = `
-        /* === 头部按钮容器 === */
+      style.textContent = `        /* === 头部按钮容器 === */
         .whale-header-btn {
           position: relative;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 32px;
-          height: 32px;
+          width: 44px;
+          height: 44px;
           border: none;
           background: transparent;
           cursor: pointer;
-          border-radius: 8px;
+          border-radius: 10px;
           transition: background 0.2s, transform 0.2s;
           padding: 0;
           overflow: visible;
@@ -178,192 +177,138 @@ window.__ModuleLoader__.load({
           background: var(--dsh-color-bg-hover, rgba(0,0,0,0.06));
         }
         .whale-header-btn.active {
-          background: var(--dsh-color-brand-bg, rgba(77,107,254,0.1));
+          background: transparent;
         }
         .whale-header-btn:active {
           transform: scale(0.92);
         }
-
-        /* === 赛博朋克鲸鱼图片动画 === */
-        .whale-cyber {
-          transition: filter 0.3s, opacity 0.3s, box-shadow 0.3s;
-          display: block;
+        .whale-icon-wrap {
+          position: relative;
+          display: inline-block;
+        }
+        .whale-glow-bg {
+          position: absolute;
+          inset: -8px;
           border-radius: 50%;
+          background: radial-gradient(circle, rgba(0,200,255,0.35) 0%, rgba(150,0,255,0.2) 40%, transparent 70%);
+          opacity: 0;
+          transition: opacity 0.3s;
+          pointer-events: none;
+        }
+        .whale-header-btn.active .whale-glow-bg {
+          opacity: 1;
+          animation: glow-pulse 3s ease-in-out infinite;
+        }
+        .whale-header-btn.streaming .whale-glow-bg {
+          animation: glow-pulse-fast 1.2s ease-in-out infinite;
+        }
+        @keyframes glow-pulse {
+          0%, 100% { transform: scale(0.9); opacity: 0.6; }
+          50% { transform: scale(1.15); opacity: 1; }
+        }
+        @keyframes glow-pulse-fast {
+          0%, 100% { transform: scale(0.95); opacity: 0.7; }
+          50% { transform: scale(1.2); opacity: 1; }
+        }
+        .whale-ring {
+          position: absolute;
+          inset: -4px;
+          border-radius: 50%;
+          background: conic-gradient(from 0deg, transparent 0deg, rgba(0,200,255,0.8) 60deg, transparent 120deg, transparent 180deg, rgba(150,0,255,0.8) 240deg, transparent 300deg);
+          opacity: 0;
+          transition: opacity 0.3s;
+          pointer-events: none;
+          -webkit-mask: radial-gradient(circle, transparent 55%, black 56%, black 100%);
+          mask: radial-gradient(circle, transparent 55%, black 56%, black 100%);
+        }
+        .whale-header-btn.active .whale-ring {
+          opacity: 0.7;
+          animation: whale-ring-rotate 3s linear infinite;
+        }
+        .whale-header-btn.streaming .whale-ring {
+          opacity: 1;
+          animation: whale-ring-rotate-fast 1s linear infinite;
+        }
+        @keyframes whale-ring-rotate {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes whale-ring-rotate-fast {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .whale-cyber {
+          position: relative;
+          display: block;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          object-fit: contain;
+          transition: filter 0.3s, opacity 0.3s, transform 0.3s;
+          z-index: 1;
         }
         .whale-header-btn.active .whale-cyber {
-          animation: cyber-float 3s ease-in-out infinite;
-          box-shadow: 0 0 12px rgba(0, 200, 255, 0.6), 0 0 24px rgba(150, 0, 255, 0.4);
+          animation: cyber-float 3s ease-in-out infinite, neon-color-cycle 5s linear infinite, neon-breathe 2.5s ease-in-out infinite, neon-flicker 8s linear infinite;
         }
         .whale-header-btn.streaming .whale-cyber {
-          animation: cyber-float-fast 1.2s ease-in-out infinite;
-          box-shadow: 0 0 16px rgba(0, 200, 255, 0.8), 0 0 32px rgba(150, 0, 255, 0.6);
+          animation: cyber-float-fast 1.2s ease-in-out infinite, neon-color-cycle 3s linear infinite, neon-breathe 1s ease-in-out infinite;
         }
         .whale-header-btn:hover .whale-cyber {
-          box-shadow: 0 0 20px rgba(0, 200, 255, 0.9), 0 0 40px rgba(150, 0, 255, 0.7);
+          transform: scale(1.15);
         }
         @keyframes cyber-float {
-          0%, 100% { transform: translateY(0) rotate(0deg); filter: brightness(1); }
-          50% { transform: translateY(-3px) rotate(-2deg); filter: brightness(1.2); }
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-3px) rotate(-2deg); }
         }
         @keyframes cyber-float-fast {
-          0%, 100% { transform: translateY(0) rotate(0deg); filter: brightness(1); }
-          50% { transform: translateY(-4px) rotate(-3deg); filter: brightness(1.3); }
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-4px) rotate(-3deg); }
         }
-
-        /* 点击爆发发光 */
+        @keyframes neon-color-cycle {
+          0% { filter: hue-rotate(0deg) brightness(1.1); }
+          33% { filter: hue-rotate(120deg) brightness(1.2); }
+          66% { filter: hue-rotate(240deg) brightness(1.15); }
+          100% { filter: hue-rotate(360deg) brightness(1.1); }
+        }
+        @keyframes neon-breathe {
+          0%, 100% { filter: drop-shadow(0 0 4px rgba(0,200,255,0.6)) drop-shadow(0 0 8px rgba(150,0,255,0.4)); }
+          50% { filter: drop-shadow(0 0 8px rgba(0,200,255,0.9)) drop-shadow(0 0 16px rgba(150,0,255,0.7)); }
+        }
+        @keyframes neon-flicker {
+          0%, 92%, 94%, 96%, 100% { opacity: 1; }
+          93% { opacity: 0.4; }
+          95% { opacity: 0.7; }
+        }
+        .whale-header-btn.active .whale-icon-wrap {
+          animation: whale-pulse 3s ease-in-out infinite;
+        }
+        @keyframes whale-pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.06); }
+        }
         .whale-header-btn.burst .whale-cyber {
-          animation: cyber-burst 0.6s ease-out;
+          animation: cyber-burst 0.6s ease-out !important;
         }
         @keyframes cyber-burst {
-          0% { box-shadow: 0 0 12px rgba(0, 200, 255, 0.6), 0 0 24px rgba(150, 0, 255, 0.4); transform: scale(1); }
-          50% { box-shadow: 0 0 40px rgba(0, 200, 255, 1), 0 0 80px rgba(150, 0, 255, 0.8); transform: scale(1.15); }
-          100% { box-shadow: 0 0 12px rgba(0, 200, 255, 0.6), 0 0 24px rgba(150, 0, 255, 0.4); transform: scale(1); }
+          0% { transform: scale(1); filter: brightness(1); }
+          50% { transform: scale(1.2); filter: brightness(1.8) drop-shadow(0 0 20px rgba(0,200,255,1)); }
+          100% { transform: scale(1); filter: brightness(1); }
         }
-
-        /* === 喷水效果容器 === */
-        .whale-spout-container {
-          position: absolute;
-          top: -2px;
-          left: 50%;
-          transform: translateX(-50%);
-          pointer-events: none;
-          width: 40px;
-          height: 30px;
-          overflow: visible;
+        .whale-header-btn:not(.active) .whale-cyber {
+          filter: grayscale(0.85) brightness(0.45);
+          opacity: 0.5;
+          transform: scale(0.78);
         }
-
-        /* 主水柱（弧形） */
-        .whale-water-column {
-          position: absolute;
-          bottom: 4px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 3px;
-          height: 0;
-          background: linear-gradient(to top,
-            var(--dsh-color-brand, #4D6BFE),
-            rgba(77,107,254,0.3)
-          );
-          border-radius: 2px;
+        .whale-header-btn:not(.active):hover .whale-cyber {
+          filter: grayscale(0.5) brightness(0.7);
+          opacity: 0.8;
+          transform: scale(0.9);
+        }
+        .whale-header-btn:not(.active) .whale-glow-bg,
+        .whale-header-btn:not(.active) .whale-ring {
           opacity: 0;
-        }
-        .whale-header-btn.active .whale-water-column {
-          animation: water-column 1.5s ease-out infinite;
-        }
-        .whale-header-btn.streaming .whale-water-column {
-          animation: water-column-fast 0.7s ease-out infinite;
-        }
-        @keyframes water-column {
-          0% { height: 0; opacity: 0; }
-          20% { height: 18px; opacity: 0.8; }
-          60% { height: 22px; opacity: 0.5; }
-          100% { height: 26px; opacity: 0; }
-        }
-        @keyframes water-column-fast {
-          0% { height: 0; opacity: 0; }
-          20% { height: 22px; opacity: 0.9; }
-          60% { height: 28px; opacity: 0.6; }
-          100% { height: 32px; opacity: 0; }
-        }
-
-        /* 水花 droplets */
-        .whale-droplet {
-          position: absolute;
-          bottom: 8px;
-          left: 50%;
-          width: 4px;
-          height: 4px;
-          border-radius: 50%;
-          background: var(--dsh-color-brand, #4D6BFE);
-          opacity: 0;
-          transform: translateX(-50%);
-        }
-        .whale-header-btn.active .whale-droplet {
-          animation: droplet-splash 1.5s ease-out infinite;
-        }
-        .whale-header-btn.streaming .whale-droplet {
-          animation: droplet-splash-fast 0.7s ease-out infinite;
-        }
-        .whale-droplet:nth-child(2) { --dx: -8px; --dy: -16px; animation-delay: 0.1s; }
-        .whale-droplet:nth-child(3) { --dx: -4px; --dy: -22px; animation-delay: 0.15s; }
-        .whale-droplet:nth-child(4) { --dx: 0px; --dy: -26px; animation-delay: 0.2s; }
-        .whale-droplet:nth-child(5) { --dx: 4px; --dy: -22px; animation-delay: 0.25s; }
-        .whale-droplet:nth-child(6) { --dx: 8px; --dy: -16px; animation-delay: 0.3s; }
-        .whale-droplet:nth-child(7) { --dx: -12px; --dy: -10px; animation-delay: 0.35s; }
-        .whale-droplet:nth-child(8) { --dx: 12px; --dy: -10px; animation-delay: 0.4s; }
-        @keyframes droplet-splash {
-          0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0; }
-          25% { opacity: 1; }
-          100% { transform: translateX(calc(-50% + var(--dx))) translateY(var(--dy)) scale(0.2); opacity: 0; }
-        }
-        @keyframes droplet-splash-fast {
-          0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0; }
-          25% { opacity: 1; }
-          100% { transform: translateX(calc(-50% + var(--dx, 0))) translateY(calc(var(--dy, -20px) * 1.3)) scale(0.2); opacity: 0; }
-        }
-
-        /* 气泡 */
-        .whale-bubble {
-          position: absolute;
-          bottom: 0;
-          width: 3px;
-          height: 3px;
-          border-radius: 50%;
-          background: var(--dsh-color-brand, #4D6BFE);
-          opacity: 0;
-        }
-        .whale-header-btn.active .whale-bubble {
-          animation: bubble-rise 3s ease-in-out infinite;
-        }
-        .whale-bubble:nth-child(9) { left: 20%; animation-delay: 0s; --size: 2px; }
-        .whale-bubble:nth-child(10) { left: 70%; animation-delay: 1s; --size: 3px; }
-        .whale-bubble:nth-child(11) { left: 45%; animation-delay: 2s; --size: 2.5px; }
-        @keyframes bubble-rise {
-          0% { transform: translateY(0) scale(0.5); opacity: 0; }
-          20% { opacity: 0.6; }
-          80% { opacity: 0.3; }
-          100% { transform: translateY(-24px) scale(1); opacity: 0; }
-        }
-
-        /* 水波纹 */
-        .whale-ripple {
-          position: absolute;
-          bottom: -2px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 20px;
-          height: 6px;
-          border: 1.5px solid var(--dsh-color-brand, #4D6BFE);
-          border-radius: 50%;
-          opacity: 0;
-        }
-        .whale-header-btn.active .whale-ripple {
-          animation: ripple-expand 2s ease-out infinite;
-        }
-        .whale-ripple:nth-child(12) { animation-delay: 0s; }
-        .whale-ripple:nth-child(13) { animation-delay: 1s; }
-        @keyframes ripple-expand {
-          0% { width: 12px; height: 4px; opacity: 0.5; }
-          100% { width: 32px; height: 8px; opacity: 0; }
-        }
-
-        /* 点击爆发效果 */
-        .whale-header-btn.burst .whale-droplet {
-          animation: burst-splash 0.6s ease-out forwards !important;
-        }
-        @keyframes burst-splash {
-          0% { transform: translateX(-50%) translateY(0) scale(1.5); opacity: 1; }
-          100% { transform: translateX(calc(-50% + var(--dx, 0) * 2)) translateY(calc(var(--dy, -20px) * 1.5)) scale(0); opacity: 0; }
-        }
-
-        /* 模式切换过渡 */
-        .whale-header-btn .whale-spout-container {
-          transition: opacity 0.3s;
-        }
-        .whale-header-btn:not(.active) .whale-spout-container {
-          opacity: 0;
-        }
-      `;
+          animation: none;
+        }`;
       document.head.appendChild(style);
     }
 
@@ -453,7 +398,7 @@ window.__ModuleLoader__.load({
           "aria-label": "鲸鱼模式",
         },
         // SVG 鲸鱼图标（内置喷水动画）
-        React.createElement(WhaleSvgIcon, { size: 30, active: isActive })
+        React.createElement(WhaleSvgIcon, { size: 38, active: isActive })
       );
     }
 
