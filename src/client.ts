@@ -1,4 +1,4 @@
-﻿/**
+/**
  * DSH Whale 客户端入口
  * 1. 为 /whale 命令注册 popupSelect 装饰
  * 2. 在每轮消息尾部注册 token 节省统计组件
@@ -130,7 +130,7 @@ window.__ModuleLoader__.load({
             userSelect: "none",
           },
         },
-        React.createElement(WhaleSvgIcon, { size: 14, active: true }),
+        React.createElement(WhaleSvgIcon, { size: 20, active: true }),
         React.createElement("span", null, `本轮约省 ${savedTokens} token`)
       );
     }
