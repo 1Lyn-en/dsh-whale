@@ -1,3 +1,7 @@
+<div align="center">
+
+<img src="assets/whale-icon.png" alt="dsh-whale" width="120" height="120" />
+
 # 🐳 dsh-whale
 
 > 鲸鱼不废话，少词办大事
@@ -6,7 +10,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![DSH Plugin](https://img.shields.io/badge/DSH-Plugin-blue.svg)](https://github.com/deepseek-ai/deepseek-harness)
-[![dsh-plugin](https://img.shields.io/badge/topic-dsh--plugin-green.svg)](https://github.com/topics/dsh-plugin)
+[![dsh-plugin](https://img.shields.io/topic/dsh--plugin-green.svg)](https://github.com/topics/dsh-plugin)
+
+</div>
 
 ---
 
@@ -41,6 +47,8 @@ dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 ---
 
 ## 🎚️ 六档模式
+
+输入 `/whale` 后直接弹出模式下拉菜单（无需记忆参数）：
 
 | 命令                      | 模式            | 效果                   | 节省率       |
 | ------------------------- | --------------- | ---------------------- | ------------ |
@@ -88,7 +96,9 @@ dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 
 ### ⌨️ 键盘快捷键
 
-- `Ctrl/Cmd + Shift + W`：快速切换鲸鱼模式（关闭 ↔ 标准）
+| 快捷键                 | 功能                            |
+| ---------------------- | ------------------------------- |
+| `Ctrl/Cmd + Shift + W` | 快速切换鲸鱼模式（关闭 ↔ 标准） |
 
 ### 📝 极简 Commit Message
 
@@ -213,6 +223,9 @@ dsh-whale/
 │   │   └── whale-commit.ts   # /whale-commit 极简 commit message
 │   └── settings/
 │       └── whale-settings.ts # 持久化设置
+├── assets/
+│   ├── whale-icon.png        # 项目 Logo
+│   └── before-after.png      # 效果对比图
 ├── cross-platform/
 │   └── SKILL.md              # Claude/Codex 兼容版
 ├── tests/
@@ -237,18 +250,11 @@ A: 不会。代码块、技术术语、API 名完全保留，只压缩自然语�
 **Q: 为什么叫鲸鱼？**
 A: DeepSeek Harness 官方 IP 是黑色鲸鱼，鲸鱼沉默但智慧，符合"少说话多办事"的理念。
 
-**Q: 和 Caveman 有什么区别？**
-A: Caveman 是 Claude Code 生态的先驱，dsh-whale 是 DSH 原生插件，增加了文言文模式、自动清晰度保护、命令切换等 DSH 专属体验。灵感来自 Caveman，代码和 prompt 完全独立。
-
-**Q: 安全吗？**
-A: 完全安全。插件只注入 system-prompt 和注册命令，不做任何网络请求，不收集数据，代码完全开源。
+**Q: 支持哪些 DSH 版本？**
+A: 支持 DSH 0.1.0-rc.6+，兼容 web profile。
 
 ---
 
 ## 📄 License
 
-MIT © ylin
-
----
-
-_🐳 鲸鱼不废话，少词办大事。_
+MIT © [1Lyn-en](https://github.com/1Lyn-en)
