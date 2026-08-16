@@ -105,6 +105,36 @@ window.__ModuleLoader__.load({
     // Token 节省统计组件（用 SVG 小图标替代 emoji）
     // ============================================================
 
+    /**
+     * 全屏鲸鱼模式切换过渡动画（扫描线揭示：黑鲸 → 霓虹鲸）
+     */
+    function showWhaleTransition() {
+      if (document.querySelector(".whale-transition-overlay")) return;
+      const overlay = document.createElement("div");
+      overlay.className = "whale-transition-overlay";
+      const logoWrap = document.createElement("div");
+      logoWrap.className = "whale-transition-logo";
+      const neon = document.createElement("img");
+      neon.src = WHALE_ICON;
+      neon.className = "whale-transition-neon";
+      const black = document.createElement("img");
+      black.src = WHALE_ICON;
+      black.className = "whale-transition-black";
+      const scanLine = document.createElement("div");
+      scanLine.className = "whale-transition-scanline";
+      logoWrap.appendChild(neon);
+      logoWrap.appendChild(black);
+      logoWrap.appendChild(scanLine);
+      overlay.appendChild(logoWrap);
+      document.body.appendChild(overlay);
+      window.requestAnimationFrame(() => {
+        overlay.classList.add("wt-enter");
+        setTimeout(() => overlay.classList.add("wt-scan"), 320);
+        setTimeout(() => overlay.classList.add("wt-flash"), 1870);
+        setTimeout(() => overlay.classList.add("wt-exit"), 2120);
+        setTimeout(() => overlay.remove(), 2600);
+      });
+    }
     function WhaleTokenStats({ matched }: any) {
       const { text, mode } = matched || {};
       if (!text || !mode || mode === "off") return null;
@@ -308,6 +338,82 @@ window.__ModuleLoader__.load({
         .whale-header-btn:not(.active) .whale-ring {
           opacity: 0;
           animation: none;
+        }
+        /* === 鲸鱼模式切换全屏过渡动画（扫描线揭示）=== */
+        .whale-transition-overlay {
+          position: fixed;
+          inset: 0;
+          z-index: 99999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0,0,0,0.75);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.3s ease;
+        }
+        .whale-transition-overlay.wt-enter { opacity: 1; }
+        .whale-transition-overlay.wt-exit { opacity: 0; }
+        .whale-transition-logo {
+          position: relative;
+          width: min(22vw, 22vh);
+          height: min(22vw, 22vh);
+          transform: scale(0.8);
+          opacity: 0;
+          transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .wt-enter .whale-transition-logo { transform: scale(1); opacity: 1; }
+        .wt-exit .whale-transition-logo {
+          transform: scale(1.15);
+          opacity: 0;
+          transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        .whale-transition-neon, .whale-transition-black {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          border-radius: 50%;
+        }
+        .whale-transition-neon {
+          z-index: 1;
+          filter: drop-shadow(0 0 20px rgba(0,200,255,0.6)) drop-shadow(0 0 40px rgba(150,0,255,0.4));
+        }
+        .whale-transition-black {
+          z-index: 2;
+          filter: grayscale(1) brightness(0) contrast(1.2);
+          clip-path: inset(0 0 0 0);
+          transition: clip-path 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .wt-scan .whale-transition-black { clip-path: inset(0 0 0 100%); }
+        .whale-transition-scanline {
+          position: absolute;
+          top: -15%;
+          bottom: -15%;
+          width: 3px;
+          left: 0;
+          z-index: 3;
+          background: linear-gradient(to right, transparent, rgba(0,220,255,0.95), rgba(180,0,255,0.7), transparent);
+          box-shadow: 0 0 15px rgba(0,200,255,0.9), 0 0 30px rgba(150,0,255,0.6), 0 0 60px rgba(0,200,255,0.3);
+          opacity: 0;
+          transition: left 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s;
+        }
+        .wt-scan .whale-transition-scanline { left: 100%; opacity: 1; }
+        .wt-flash .whale-transition-scanline { opacity: 0; }
+        .whale-transition-overlay.wt-flash::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at center, rgba(0,220,255,0.4) 0%, rgba(150,0,255,0.2) 30%, transparent 60%);
+          animation: wt-flash-pulse 0.25s ease-out;
+        }
+        @keyframes wt-flash-pulse {
+          0% { opacity: 0; }
+          50% { opacity: 1; }
+          100% { opacity: 0; }
         }`;
       document.head.appendChild(style);
     }
@@ -372,6 +478,7 @@ window.__ModuleLoader__.load({
             await live.command(`/whale ${nextMode}`);
           }
         } catch { /* ignore */ }
+        if (nextMode !== "off") showWhaleTransition();
         currentMode = nextMode;
         setMode(nextMode);
         try { localStorage.setItem(STORAGE_KEY, nextMode); } catch { /* ignore */ }
@@ -425,6 +532,7 @@ window.__ModuleLoader__.load({
             if (!result.ok) {
               throw new Error(`切换失败：${result.error?.message ?? "未知错误"}`);
             }
+            if (option.id !== "off") showWhaleTransition();
             currentMode = option.id;
             try { localStorage.setItem(STORAGE_KEY, option.id); } catch { /* ignore */ }
           },
