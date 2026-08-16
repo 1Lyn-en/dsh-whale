@@ -144,8 +144,8 @@ window.__ModuleLoader__.load({
     /**
      * 全屏鲸鱼模式切换过渡动画（扫描线揭示：黑鲸 → 霓虹鲸）
      */
-    function showWhaleTransition() {
-      if (document.querySelector('.whale-transition-overlay')) return;
+    function showWhaleTransition(onComplete?: () => void) {
+      if (document.querySelector('.whale-transition-overlay')) { if (onComplete) onComplete(); return; }
       const overlay = document.createElement('div');
       overlay.className = 'whale-transition-overlay';
       const logoWrap = document.createElement('div');
@@ -168,7 +168,7 @@ window.__ModuleLoader__.load({
         setTimeout(() => overlay.classList.add('wt-scan'), 320);
         setTimeout(() => overlay.classList.add('wt-flash'), 1870);
         setTimeout(() => overlay.classList.add('wt-exit'), 2120);
-        setTimeout(() => overlay.remove(), 2600);
+        setTimeout(() => { overlay.remove(); if (onComplete) onComplete(); }, 2600);
       });
     }
     function WhaleTokenStats({ matched }: any) {
@@ -518,7 +518,11 @@ window.__ModuleLoader__.load({
         } catch {
           /* ignore */
         }
-        if (nextMode !== 'off') showWhaleTransition();
+        if (nextMode !== 'off') {
+          showWhaleTransition(() => activateCyberuiTheme());
+        } else {
+          deactivateCyberuiTheme();
+        }
         currentMode = nextMode;
         setMode(nextMode);
         notifyModeChange(nextMode);
@@ -836,7 +840,7 @@ html.dsh-theme-cyberui-loaded :is(aside, [data-role='sidebar']) :is([title], [da
       return tokens
     }
 
-    function applyCyberuiTheme(ctx: any) {
+    function applyCyberuiTheme(ctx: any): () => void {
       const root = document.documentElement
       const originalTitle = document.title
       root.classList.add(ROOT_CLASS)
@@ -848,12 +852,28 @@ html.dsh-theme-cyberui-loaded :is(aside, [data-role='sidebar']) :is([title], [da
       document.head.append(style)
       document.title = PRODUCT_TITLE
 
-      ctx.effect(() => () => {
+      return () => {
         style.remove()
         disposeTokens()
         if (document.title === PRODUCT_TITLE) document.title = originalTitle
-        if (document.getElementById(STYLE_ID) === null) root.classList.remove(ROOT_CLASS)
-      }, 'cyberui: DeepSeek Harness cyberpunk presentation')
+        root.classList.remove(ROOT_CLASS)
+      }
+    }
+
+    // 主题状态管理
+    let themeCtx: any = null
+    let themeDispose: (() => void) | null = null
+
+    function activateCyberuiTheme() {
+      if (themeDispose || !themeCtx) return
+      themeDispose = applyCyberuiTheme(themeCtx)
+    }
+
+    function deactivateCyberuiTheme() {
+      if (themeDispose) {
+        themeDispose()
+        themeDispose = null
+      }
     }
 
     
@@ -862,8 +882,11 @@ html.dsh-theme-cyberui-loaded :is(aside, [data-role='sidebar']) :is([title], [da
     // ============================================================
 
     function apply(ctx: any) {
-      // 0. 激活 CyberUI 赛博朋克主题
-      if (ctx.theme) applyCyberuiTheme(ctx);
+      // 0. 保存 ctx，初始化时检查是否已在鲸鱼模式
+      themeCtx = ctx;
+      ctx.effect(() => () => { deactivateCyberuiTheme(); }, 'dsh-whale: theme cleanup');
+      if (currentMode !== 'off' && ctx.theme) activateCyberuiTheme();
+
 
       const command = ctx.get('commandUi');
       const sessions = ctx.sessions;
@@ -885,7 +908,11 @@ html.dsh-theme-cyberui-loaded :is(aside, [data-role='sidebar']) :is([title], [da
                 if (!result.ok) {
                   throw new Error(`切换失败：${result.error?.message ?? '未知错误'}`);
                 }
-                if (option.id !== 'off') showWhaleTransition();
+                if (option.id !== 'off') {
+                  showWhaleTransition(() => activateCyberuiTheme());
+                } else {
+                  deactivateCyberuiTheme();
+                }
                 currentMode = option.id;
                 notifyModeChange(option.id);
                 try {
