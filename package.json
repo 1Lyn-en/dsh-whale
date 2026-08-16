@@ -8,11 +8,13 @@
   "exports": {
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
+    "./cyberui-theme": "./lib/cyberui-theme.js",
     "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
   },
   "files": [
     "lib",
+    "assets/cyberui",
     "cordis.patch.yml",
     "README.md",
     "README.en.md",
