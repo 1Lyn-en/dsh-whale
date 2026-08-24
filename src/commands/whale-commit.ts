@@ -2,8 +2,8 @@
  * /whale-commit 命令处理
  * 执行 git diff --staged，生成极简 commit message
  */
-import { execSync } from 'node:child_process';
-import type { CommandResult } from './whale-command.js';
+import { execFileSync } from 'node:child_process';
+import type { CommandResult, WhaleCommandContext } from './whale-command.js';
 
 /** 变更文件信息 */
 interface ChangedFile {
@@ -13,10 +13,11 @@ interface ChangedFile {
 
 /**
  * 执行 git 命令并返回输出
+ * 使用 execFileSync + 参数数组，避免 shell 字符串拼接
  */
-function gitExec(args: string, cwd?: string): string {
+function gitExec(args: string[], cwd?: string): string {
   try {
-    return execSync(`git ${args}`, {
+    return execFileSync('git', args, {
       cwd: cwd ?? process.cwd(),
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'pipe'],
@@ -31,7 +32,7 @@ function gitExec(args: string, cwd?: string): string {
  * 获取暂存区变更文件列表
  */
 function getStagedFiles(cwd?: string): ChangedFile[] {
-  const output = gitExec('diff --staged --name-status', cwd);
+  const output = gitExec(['diff', '--staged', '--name-status'], cwd);
   if (!output) return [];
   return output
     .split('\n')
@@ -50,7 +51,7 @@ function getStagedFiles(cwd?: string): ChangedFile[] {
  * 获取暂存区 diff（限制长度）
  */
 function getStagedDiff(cwd?: string, maxChars = 3000): string {
-  const output = gitExec('diff --staged', cwd);
+  const output = gitExec(['diff', '--staged'], cwd);
   if (!output) return '';
   if (output.length > maxChars) {
     return output.slice(0, maxChars) + '\n... (diff 已截断)';
@@ -62,13 +63,13 @@ function getStagedDiff(cwd?: string, maxChars = 3000): string {
  * 判断是否在 git 仓库中
  */
 function isGitRepo(cwd?: string): boolean {
-  return gitExec('rev-parse --is-inside-work-tree', cwd) === 'true';
+  return gitExec(['rev-parse', '--is-inside-work-tree'], cwd) === 'true';
 }
 
 /**
  * 根据文件路径判断提交类型
  */
-function inferCommitType(files: ChangedFile[]): string {
+export function inferCommitType(files: ChangedFile[]): string {
   const paths = files.map((f) => f.path.toLowerCase());
   const hasNew = files.some((f) => f.status === 'A');
   const hasDelete = files.some((f) => f.status === 'D');
@@ -106,7 +107,7 @@ function inferCommitType(files: ChangedFile[]): string {
 /**
  * 从文件路径提取简短描述
  */
-function inferDescription(files: ChangedFile[]): string {
+export function inferDescription(files: ChangedFile[]): string {
   if (files.length === 0) return '更新代码';
 
   // 取第一个文件的 basename 或目录名
@@ -130,7 +131,7 @@ function inferDescription(files: ChangedFile[]): string {
 /**
  * 生成极简 commit message（≤50 字符）
  */
-function generateCommitMessage(files: ChangedFile[]): string {
+export function generateCommitMessage(files: ChangedFile[]): string {
   const type = inferCommitType(files);
   const desc = inferDescription(files);
   let msg = `${type}: ${desc}`;
@@ -145,7 +146,10 @@ function generateCommitMessage(files: ChangedFile[]): string {
 /**
  * 处理 /whale-commit 命令
  */
-export function handleWhaleCommitCommand(_rawInput: string, _ctx: unknown): CommandResult {
+export function handleWhaleCommitCommand(
+  _rawInput: string,
+  _ctx: WhaleCommandContext | null,
+): CommandResult {
   // 检查是否在 git 仓库中
   if (!isGitRepo()) {
     return {
@@ -191,7 +195,7 @@ export function handleWhaleCommitCommand(_rawInput: string, _ctx: unknown): Comm
       '',
       '---',
       '直接复制使用，或执行：',
-      `\`git commit -m "${message}"\``,
+      `\`git commit -m "${message.replace(/"/g, '\\"')}"\``,
     ]
       .filter(Boolean)
       .join('\n'),

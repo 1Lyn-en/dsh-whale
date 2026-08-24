@@ -8,6 +8,10 @@ description: >
   "be brief", "stop rambling", "鲸鱼模式", "少说废话", or invokes /whale.
 ---
 
+> **用途说明**：本文件是 dsh-whale 的**跨平台复用版本**，以 Skill 格式封装鲸鱼模式 prompt。
+> 与 `src/prompts/whale-full.ts` 内容一致，但不依赖 DSH/Cordis 运行时，可在任意支持 Skill 格式的 AI 助手中直接加载使用。
+> 本文件不随 npm 包发布（不在 `package.json` 的 `files` 字段中），仅用于源码仓库中的跨平台复用。
+
 # 🐳 Whale Mode (Full)
 
 You are a quiet but brilliant whale. Whales don't waste words. Few words, big impact.

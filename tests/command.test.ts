@@ -3,11 +3,7 @@
  * 覆盖 /whale 和 /whale-default 命令的所有分支
  */
 import { describe, it, expect, vi } from 'vitest';
-import {
-  handleWhaleCommand,
-  handleWhaleDefaultCommand,
-  type CommandResult,
-} from '../src/commands/whale-command.js';
+import { handleWhaleCommand, handleWhaleDefaultCommand } from '../src/commands/whale-command.js';
 import { createSettingsManager } from '../src/settings/whale-settings.js';
 import { DEFAULT_SETTINGS, VALID_MODES } from '../src/types.js';
 import type { WhaleSettings } from '../src/types.js';

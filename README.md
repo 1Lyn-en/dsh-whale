@@ -100,8 +100,8 @@ dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 
 主题切换与 logo 过渡动画联动：动画播放完毕后，整个界面从默认主题平滑切换为赛博朋克霓虹风格。选择「关闭」模式时立即恢复默认主题。
 
-| 暗色赛博朋克 | 亮色赛博朋克 |
-| :---: | :---: |
+|                   暗色赛博朋克                   |                    亮色赛博朋克                    |
+| :----------------------------------------------: | :------------------------------------------------: |
 | ![CyberUI Dark](assets/cyberui/cyberui-dark.png) | ![CyberUI Light](assets/cyberui/cyberui-light.png) |
 
 **主题特性：**
@@ -112,12 +112,12 @@ dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 - 侧边栏长标题优雅截断
 - 时间线展开动画
 
-| 代码表格 | 时间线展开 |
-| :---: | :---: |
+|                           代码表格                           |                            时间线展开                             |
+| :----------------------------------------------------------: | :---------------------------------------------------------------: |
 | ![CyberUI Code Table](assets/cyberui/cyberui-code-table.png) | ![CyberUI Timeline](assets/cyberui/cyberui-timeline-expanded.png) |
 
-| 侧边栏长标题 |
-| :---: |
+|                                 侧边栏长标题                                 |
+| :--------------------------------------------------------------------------: |
 | ![CyberUI Sidebar Long Title](assets/cyberui/cyberui-sidebar-long-title.png) |
 
 > 主题仅在鲸鱼模式激活时生效，不影响默认 DSH 体验。刷新页面时若已在鲸鱼模式，主题自动恢复。
@@ -195,7 +195,7 @@ dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 
 ```bash
 # Claude Code
-/skill add https://raw.githubusercontent.com/1Lyn-en/dsh-whale/main/cross-platform/SKILL.md
+/skill add https://raw.githubusercontent.com/1Lyn-en/dsh-whale/master/cross-platform/SKILL.md
 ```
 
 ---
@@ -258,9 +258,12 @@ dsh-whale/
 │   └── SKILL.md              # Claude/Codex 兼容版
 ├── tests/
 │   ├── command.test.ts
+│   ├── commit.test.ts
+│   ├── package.test.ts
 │   └── prompt.test.ts
 ├── .github/workflows/ci.yml  # CI（typecheck + lint + format + build + test）
 ├── eslint.config.js          # ESLint 配置
+├── vitest.config.ts          # Vitest 测试与覆盖率配置
 ├── .prettierrc               # Prettier 配置
 ├── cordis.patch.yml          # DSH 插件配置
 ├── package.json

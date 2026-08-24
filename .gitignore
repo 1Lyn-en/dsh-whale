@@ -22,6 +22,7 @@ desktop.ini
 # IDE
 .vscode/
 .idea/
+.trae/
 *.swp
 *.swo
 *~
@@ -37,6 +38,13 @@ coverage/
 
 # npm pack
 *.tgz
+
+# Root-level debug screenshots (assets/ 下的图片不受影响)
+/*.png
+/*.jpg
+/*.jpeg
+/*.gif
+/*.webp
 
 # Temp
 tmp/

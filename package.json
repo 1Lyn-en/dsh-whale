@@ -8,20 +8,21 @@
   "exports": {
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
-    "./cyberui-theme": "./lib/cyberui-theme.js",
     "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
   },
   "files": [
     "lib",
-    "assets/cyberui",
+    "assets/cyberui/DeepSeek_cyberpunk_floating.svg",
+    "assets/cyberui/DeepSeek_cyberpunk.webp",
     "cordis.patch.yml",
     "README.md",
     "README.en.md",
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsc",
+    "clean": "node -e \"require('node:fs').rmSync('lib',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
