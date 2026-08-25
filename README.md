@@ -100,7 +100,7 @@ dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 
 主题切换与 logo 过渡动画联动：动画播放完毕后，整个界面从默认主题平滑切换为赛博朋克霓虹风格。选择「关闭」模式时立即恢复默认主题。
 
-|                   暗色赛博朋克                   |                    亮色赛博朋克                    |
+|                   暗色赛博朋克                   |                    正常模式                       |
 | :----------------------------------------------: | :------------------------------------------------: |
 | ![CyberUI Dark](assets/cyberui/cyberui-dark.png) | ![CyberUI Light](assets/cyberui/cyberui-light.png) |
 
