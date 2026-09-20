@@ -18,7 +18,9 @@
 
 ## 📊 Before / After
 
-![dsh-whale Before/After 对比](assets/before-after.png)
+<p align="center">
+  <img src="assets/before-after.png" alt="dsh-whale Before/After 对比" width="480" />
+</p>
 
 | 正常模式（69 token）                                                                                                               | 鲸鱼模式（18 token）                                                     |
 | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
@@ -102,7 +104,7 @@ dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 
 |                   暗色赛博朋克                   |                    正常模式                       |
 | :----------------------------------------------: | :------------------------------------------------: |
-| ![CyberUI Dark](assets/cyberui/cyberui-dark.png) | ![CyberUI Light](assets/cyberui/cyberui-light.png) |
+| <img src="assets/cyberui/cyberui-dark.png" alt="CyberUI Dark" width="480" /> | <img src="assets/cyberui/cyberui-light.png" alt="CyberUI Light" width="480" /> |
 
 **主题特性：**
 
@@ -114,11 +116,11 @@ dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
 
 |                           代码表格                           |                            时间线展开                             |
 | :----------------------------------------------------------: | :---------------------------------------------------------------: |
-| ![CyberUI Code Table](assets/cyberui/cyberui-code-table.png) | ![CyberUI Timeline](assets/cyberui/cyberui-timeline-expanded.png) |
+| <img src="assets/cyberui/cyberui-code-table.png" alt="CyberUI Code Table" width="480" /> | <img src="assets/cyberui/cyberui-timeline-expanded.png" alt="CyberUI Timeline" width="480" /> |
 
 |                                 侧边栏长标题                                 |
 | :--------------------------------------------------------------------------: |
-| ![CyberUI Sidebar Long Title](assets/cyberui/cyberui-sidebar-long-title.png) |
+| <img src="assets/cyberui/cyberui-sidebar-long-title.png" alt="CyberUI Sidebar Long Title" width="480" /> |
 
 > 主题仅在鲸鱼模式激活时生效，不影响默认 DSH 体验。刷新页面时若已在鲸鱼模式，主题自动恢复。
 
