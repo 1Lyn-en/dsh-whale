@@ -41,7 +41,7 @@ dsh plugin --profile web add @1lyn-en/dsh-whale
 
 # 本地开发安装
 npm pack
-dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
+dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.1.tgz
 ```
 
 安装后重启 `dsh web`，在对话中输入 `/whale` 即可激活。
@@ -229,7 +229,7 @@ npm run build
 npm run pack
 
 # 本地安装测试
-dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.0.tgz
+dsh plugin --profile web add ./1lyn-en-dsh-whale-0.1.1.tgz
 ```
 
 ### 项目结构
@@ -284,7 +284,7 @@ A: 不会。代码块、技术术语、API 名完全保留，只压缩自然语�
 A: DeepSeek Harness 官方 IP 是黑色鲸鱼，鲸鱼沉默但智慧，符合"少说话多办事"的理念。
 
 **Q: 支持哪些 DSH 版本？**
-A: 支持 DSH 0.1.0-rc.6+，兼容 web profile。
+A: 支持 DSH 0.1.0-rc.6 ~ 0.2.x，兼容 web profile。DSH 0.2.x 请使用 v0.1.1+。
 
 ---
 

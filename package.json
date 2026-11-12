@@ -1,6 +1,6 @@
 {
   "name": "@1lyn-en/dsh-whale",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "鲸鱼不废话，少词办大事 — DSH 极简语模式，节省 60-75% 输出 token",
   "type": "module",
   "main": "lib/index.js",
@@ -35,7 +35,7 @@
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-tools": ">=0.0.1-rc.1 <0.2.0"
+    "@deepseek-ai/dsh-tools": ">=0.0.1-rc.1 <0.3.0"
   },
   "peerDependenciesMeta": {
     "@deepseek-ai/dsh-tools": {
@@ -60,10 +60,11 @@
     },
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-modules",
         "@deepseek-ai/dsh-client-ui-commands",
         "@deepseek-ai/dsh-client-ui-conversation",
-        "@deepseek-ai/dsh-client-ui-slots"
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-theme"
       ],
       "platform": "web"
     }
